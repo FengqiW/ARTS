@@ -1,0 +1,112 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+
+######A:
+
+leetcode algo 1:
+//    时间复杂度：O(n2)
+//    空间复杂度：O(1)
+
+        static public int[] twoSum(int[] nums, int target) {
+            for (int i = 0; i < nums.length; i++) {
+                for (int j = i + 1; j < nums.length; j++) {
+                    if (nums[j] == target - nums[i]) {
+                        return new int[] { i, j };
+                    }
+                }
+            }
+            throw new IllegalArgumentException("No two sum solution");
+        }
+
+        //时间复杂度：O(n)
+        //空间复杂度：O(n)
+
+       static public int[] twoSum2(int[] nums, int target) {
+           Map<Integer, Integer> map = new HashMap<>();
+           for (int i = 0; i < nums.length; i++) {
+               map.put(nums[i], i);
+           }
+           for (int i = 0; i < nums.length; i++) {
+               int complement = target - nums[i];
+               if(map.containsKey(complement) && map.get(complement) != i){
+                   return new int[] {i, map.get(complement)};
+               }
+           }
+
+           throw new IllegalArgumentException("No two sum solution");
+       }
+
+    //时间复杂度：O(n)
+    //空间复杂度：O(n)
+    public int[] twoSum3(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum solution");
+    }
+
+
+
+#####R:
+暂时还没有目标，有哪些好的英文技术文章，为了完成任务，先阅读一下nginx的英文文档吧
+http://nginx.org/en/
+NGINX is now part of F5  -> F5指的是防火墙吗，先不细究
+
+基本介绍6大部分
+1. 基本的HTTP server 功能
+2. 其它HTTP server 功能
+3. 邮件代理 服务功能 
+4. TCP/UDP 代理服务功能
+5. 架构和扩展性
+6. 支持的操作系统和平台
+
+1. Basic HTTP server features
+
+基本介绍中提到 nginx的代码和文档遵循 2-clause BSD-like license. 
+这是一个什么许可没有研究
+nginx 还有商业支持。。。
+
+load balancing and fault tolerance; 
+负载均衡和容错
+模块化架构
+支持HTTP2 weighted and dependency-based prioritization
+权重和基于依赖关系的优先级
+
+2. Other HTTP server features
+各种形式的虚拟主机，日志，rewrite模块
+HTTP方法，流媒体，
+A/B 测试等
+
+3. Mail proxy server features  -- 这个不计划读
+4.TCP/UDP proxy server features -- 貌似主要用来做负载均衡
+5.Architecture and scalability  -- 架构和扩展性
+6.Tested OS and platforms  -- 列了很多操作系统，好多没的接触过，目前主要接触的OS有WINDOWS, LINUX, MACOS
+
+下周开始细读第一章
+如果发现了好的英文博客和技术文章，
+有可能切换到新的内容上
+
+
+#####T:
+说两个sed的使用
+1. sed 可以直接修改某个字符串
+2. sed 替换某个字符串可以使用变量
+3，示例:
+strmid=`printf "%02d" $mid`;
+urlhandled=`echo $urltmp|sed "s#01_v.zip#${strmid}_v.zip#g"`;
+
+
+#####S:
+先把ngnix的官方文档扔出来
+http://nginx.org/en/
+
+
+
