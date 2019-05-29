@@ -1,0 +1,70 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+
+######A:
+
+static public class ListNode {
+     int val;
+     ListNode next;
+     ListNode(int x) { val = x; }
+    }
+
+    static public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode  result = new ListNode(0);
+        ListNode p = l1, q = l2, curr = result;
+        int carry = 0;
+        while(p != null || q != null){
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+
+            int res = x + y + carry;
+            //if(res >= 10 ) { carry = 1; } else {carry = 0;}
+            carry = res / 10;
+
+            curr.next = new ListNode(res%10);
+            curr = curr.next;
+
+            if(p != null) p = p.next;
+            if(q != null) q = q.next;
+
+        }
+
+        if(carry > 0){
+            curr.next = new ListNode(1);
+        }
+
+        return result.next;
+    }
+
+
+    ######R:
+http://nginx.org/en/docs/
+1. 跳过安装和编译，直接看新手指引
+2. 启动，停止和重新加载配置文件
+    2.1权限方面
+    This command should be executed under the same user that started nginx
+    ps -ax | grep nginx
+3. 配置文件的架构
+    简单指令， 块指令。。
+    event ,http 两个context 属于主配置，
+    server 属于 http, location属于server
+4. 静态内容的服务
+    4.1 location 指令， 
+     Match 规则：
+     If there are several matching location blocks nginx selects the one with the longest prefix   
+5.代理服务器的搭建
+    nginx配置文件中的正则表达式
+    A regular expression should be preceded with ~
+6.配置 FastCGI 代理
+    fastcgi_pass directive              
+    
+    ######T:
+    数据据建立索引的方式1：
+    CREATE INDEX index_name ON table_name (column_id);
+    show index from table_name;
+
+    ######S:
+    http://nginx.org/en/docs/  nginx documentation 
