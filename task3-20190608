@@ -1,0 +1,103 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+
+######A:
+无重复字符的最长子串
+
+    public static  int lenghtOfLongestSubstring(String s){
+        int ans = 0;
+        int n = s.length();
+        for (int i = 0; i <n; i++) {
+            for (int j = i+1; j < n; j++) {
+                if(allUniqeChar(s, i, j)){
+                    ans = Math.max(ans, j-i);
+                }else {
+                    break;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public static boolean allUniqeChar(String s , int start , int end){
+       Set<Character> set = new HashSet<>();
+        for (int i = start; i < end; i++) {
+            Character c = s.charAt(i);
+            if(set.contains(c)){
+                return false;
+            }else {
+                set.add(c);
+            }
+
+        }
+       return true;
+    }
+/**
+ * 滑动窗口
+ *
+ * **/
+
+public static  int lenghtOfLongestSubstring2(String s){
+    int ans = 0;
+    int n = s.length();
+    int i = 0, j = 0;
+    Set<Character> set = new HashSet<>();
+
+    while (i<n && j<n){
+           if( !set.contains(s.charAt(j)) ) {
+              set.add(s.charAt(j++));
+              ans = Math.max(ans, j-i);
+           }else{
+               set.remove(s.charAt(i++));
+           }
+    }
+
+    return ans;
+}
+
+
+    public static  int lenghtOfLongestSubstring3(String s){
+        int ans = 0;
+        int n = s.length();
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (int i = 0, j = 0; j < n; j++) {
+            if( map.containsKey(s.charAt(j)) ){
+                i = Math.max(i , map.get(s.charAt(j)) );
+            }
+            ans = Math.max(ans, j-i+1);
+            map.put(s.charAt(j), j+1);
+        }
+
+        return ans;
+    }
+
+
+
+######R:
+(admin's gaidline)
+https://docs.nginx.com/nginx/admin-guide/
+目前还没有清楚admin's gaidline的作用，太复杂
+
+Controlling nginx:
+1. nginx 的主线程和工作线程都可以通过信号控制
+2. 更改配置后nginx的工作流程  
+	2.1 检查配置的正确性，不正确则rollback
+	2.2 配置正确，启动新的工作线程，给老线程发消息，通知他们优雅退出
+3. Upgrading Executable on the Fly  (飞行过程中升级？)
+4. use 指令 和 连接的处理方式
+	4.1 select, poll, kqueue, epoll, /dev/poll, eventport
+	4.2 MAC上是kqueue模型，Linux上是epoll模型
+
+######T:
+在多线程环境下，需要某个线程根据条件wait的话，
+要使用while，不要使用if， 否则线程唤醒后，
+后进入wait的下一个命令执行，就可能会跳出条件判断
+
+
+######S:
+http://nginx.org/en/docs/control.html
