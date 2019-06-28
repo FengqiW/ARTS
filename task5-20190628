@@ -1,0 +1,107 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+
+######A:
+//这道题目算是抄写背诵
+ public static String longestPalindrome(String s) {
+
+        if (s == null || s.length() < 1) return "";
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+
+    }
+
+ private static int expandAroundCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }    
+######R:
+http://nginx.org/en/docs/syslog.html
+nginx 的日志
+error_log 和 access_log
+可以直接记录到syslog中，可以指定日志服务器server=address
+示例：
+access_log syslog:server=[2001:db8::1]:12345,facility=local7,tag=nginx,severity=info combined;
+从版本1.7.1开始支持记录日志到syslog
+
+######T:
+wait(), notify/notifyAll 方法是建立在锁的基础上，他们会唤醒在当前锁对象上面等待的线程
+wait() 不能用 sleep() 替换，sleep()不会释放实例的锁定
+Thread.instance.start()  方法使用了balk模式， 只能调用一次，不能多次调用
+要了解Java中的volatile, 需要先了解JMM（java内存模型）
+参考：
+https://www.cnblogs.com/chengxiao/p/6528109.html
+
+ * void mySleep(long x){
+ *     if(x != 0){
+ *         Object o = new Object();
+ *         synchronized(o){
+ *             o.wait(x);
+ *         }
+ *     }
+ * }
+
+ * 1. try catch 有时候要在while里面，否则发生异常时会跳出while loop；有时候要在while外面吧？
+ * 2. wait() 不能用 sleep() 替换，sleep()不会释放实例的锁定
+
+// before/after模式, 语句的位置很重要
+before();
+try{
+	execute();
+}finally{
+	after();
+}
+
+interrupt();要搞清楚是哪个线程调用，会唤起哪个线程
+ /**
+* 1.直接使用interrupt()相当于this.interrupt(), 无论哪个线程调用，都会使CountupThread中断
+* 2.哪个线程调用interrupt()，就会在哪个线程上生成中断
+*/
+
+ /**Thread类中的join方法的主要作用就是同步，它可以使得线程之间的并行执行变为串行执行
+ * 1.在A线程中调用了B线程的join()方法时，表示只有当B线程执行完毕时，A线程才能继续执行
+ * 2.A线程中调用了B线程的join方法，则相当于在A线程中调用了B线程的wait方法，
+ * 当B线程执行完（或者到达等待时间），B线程会自动调用自身的notifyAll方法唤醒A线程?
+ * 3.调用某个对象的wait方法时，当前线程会阻塞，原理大概如下：
+ * 每个对象其实都有个队列,管理竞争该对象的所有线程，
+ * 线程阻塞（直接调用这个对象的wait方法或者请求该对象的锁）
+ * 其实就是把线程加入到该队列；
+ * notify就是把阻塞队列中线程唤醒。
+ */
+
+1.区别代码和线程：
+java的Thread类用来实现一个线程，
+而多线程并发其实是多个线程的run方法（而run方法又可以调用其他方法，可以是自身类或者对象方法，也可以是其他对象或者类的方法）的并发
+main线程，即主线程没有run方法，但是也是可以和其他线程并发运行的）。
+这里因为B对象的join方法是被A线程调用的，
+因此wait方法也是在A线程的调用栈中，
+而wait方法就是将当前线程（即调用该方法的线程A,而不是方法在代码上的归属B）加入B的blockQueue里。
+2.因此，实际上就是
+A.run(){
+	...; 
+	threadB.join(){ //threadB.join()不是B线程（活动实体）调用自己的join方法，而是A线程调用线程对象B（静态代码）的join方法。
+		...;
+		while(threadB.isAlive(){
+			wait();//A被block，直到B 使用notifyAll()wakeupA
+		}
+	}
+}
+
+######S:
+http://nginx.org/en/docs/syslog.html
