@@ -1,0 +1,141 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+数组 
+实现一个支持动态扩容的数组 
+实现一个大小固定的有序数组，支持动态增删改操作 
+实现两个有序数组合并为一个有序数组
+
+链表 
+实现单链表、循环链表、双向链表，支持增删操作
+实现单链表反转 
+链表中环的检测
+删除链表倒数第 n 个结点
+实现两个有序的链表合并为一个有序链表
+实现求链表的中间结点
+LeetCode对应编号：206，141，21，19，876
+
+栈：
+LeetCode对应编号：20,155,232,844,224,682,496
+
+判断一个字符串是否是回文字符串
+通过单链表来存储
+    //1.Constructor
+    //2.CRUD
+    //3.Print
+    //4.Main
+
+######A:
+T20
+public class T20 {
+
+    public boolean isValid1(String s) {
+        Stack<Character> leftOps = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c){
+                case '(':
+                case '[':
+                case '{':
+                {
+                    leftOps.add(c);
+                    break;
+                }
+                case ')': {
+                    if(leftOps.empty()) return false;
+                    char topc = leftOps.pop();
+                    if(topc == '(') continue;
+                    else  return false;
+                }
+                case ']': {
+                    if(leftOps.empty()) return false;
+                    char topc = leftOps.pop();
+                    if(topc == '[') continue;
+                    else  return false;
+                }
+                case '}': {
+                    if(leftOps.empty()) return false;
+                    char topc = leftOps.pop();
+                    if(topc == '{') continue;
+                    else  return false;
+                }
+                default:
+                    break;
+            }
+        }
+
+        return leftOps.empty();
+    }
+
+    private HashMap<Character, Character> mappings;
+    public T20(){
+        this.mappings = new HashMap<Character, Character>();
+        this.mappings.put(')', '(');
+        this.mappings.put('}', '{');
+        this.mappings.put(']', '[');
+    }
+
+    public boolean isValid(String s) {
+        Stack<Character> leftOps = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!mappings.containsKey(c)){
+                if(mappings.containsValue(c))
+                    leftOps.add(c);
+            }else{
+                if(leftOps.empty()) return false;
+                char topc = leftOps.pop();
+                if(topc != mappings.get(c)) return false;
+            }
+        }
+
+        return leftOps.empty();
+    }
+
+    public static void main(String[] args){
+
+    }
+}
+
+
+
+######R:
+前段时间看nginx的文档，有一段时间没看，
+再打开感觉目录有点凌乱，
+找不到从哪里开始的感觉了。。
+
+最近代码合并出现一些问题，于是看一看Git的官方文档
+https://git-scm.com/book/zh/
+
+git查看commit提交记录详情
+
+git show 2fa6aebfd733a4 | grep 'xxxxx'
+git show 2fa6aebfd733a4 `filePath`
+git log -S'xxxxx'
+
+看git的man手册，翻了几页没看到怎么查询提交记录详情，
+不得已还是百度了一下。。
+
+需要逐渐习惯看官方英文文档。。
+
+
+######T:
+1.array：线性表，连续的内存空间和相同类型的数据
+数组的时间复杂度：插入O(n), 随机访问O(1)
+2.单链表、双向链表和循环链表
+时间复杂度：插入O(n), 随机访问O(1)
+LinkedHashMap（双向链表）
+linked list:
+基于链表实现 LRU 缓存淘汰算法:
+
+######S:
+https://git-scm.com/book/zh/
+
+
+
+
+
+
+
