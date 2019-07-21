@@ -1,0 +1,107 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+数组 
+实现一个支持动态扩容的数组 
+实现一个大小固定的有序数组，支持动态增删改操作 
+实现两个有序数组合并为一个有序数组
+LeetCode对应编号：15，41,169 - done
+
+链表 
+实现单链表、循环链表、双向链表，支持增删操作
+实现单链表反转 
+链表中环的检测
+删除链表倒数第 n 个结点
+实现两个有序的链表合并为一个有序链表
+实现求链表的中间结点
+LeetCode对应编号：206，141，21，19，876
+
+栈：
+LeetCode对应编号：20-done,155,232,844,224,682,496
+
+判断一个字符串是否是回文字符串
+通过单链表来存储
+    //1.Constructor
+    //2.CRUD  增加(Create)、读取查询(Retrieve)、更新(Update)和删除(Delete)
+    //3.Print
+    //4.Main
+  
+
+######A:
+    public int T41_firstMissingPositive(int[] nums) {
+        Arrays.sort(nums);
+        int length = nums.length;
+        if(length <= 0) return 1;
+
+        int j = 1;
+        boolean find = false;
+        for (int i = 0; i < length; i++) {
+            if(nums[i] <= 0 ) continue;
+
+            if(nums[i] <= j){
+                if((i+1)<length && nums[i+1] != nums[i])
+                    ++j;
+                find  = true;
+                continue;
+            }
+            else{
+                return j;
+            }
+        }
+
+        return find ? j+1 : j;
+    }  
+
+    public int T169_majorityElement(int[] nums) {
+//        Arrays.sort(nums);
+//        int len = nums.length;
+//        if(len % 2 == 0){
+//            return nums[len/2];
+//        }else{
+////            int mid = Math.ceil(len / 2);
+//            int mid = len / 2 ;
+//            return nums[mid];
+//        }
+
+
+        Arrays.sort(nums);
+        return nums[nums.length/2];
+    }
+
+######R:
+今天按上面题目实现一个数组的包装，
+一动手才发现细节非常多，
+主要是数组的插入和删除操作有阻碍，
+比如按一个空间为5常规整数数组 
+int[] test = new int[5];
+test[2] = 2;
+理论上要支持这种操作有点复杂
+
+大部分的demo都要求数据连续，
+先有test[0] = 0; test[1] = 1,
+才能操作 test[2] = 2;
+这样实现的话，又明显不符合数组的操作。。。
+
+这个问题，Java肯定是处理过了，
+只是JAVA基本功差，
+没搞清楚过。。
+
+
+######T:
+国外网站不方便访问，
+为了表示我没有停止不动，
+找个国内网站看一看。。
+
+有个runoob.com内容也挺多的，就看它好了。。。
+
+######S:
+https://www.runoob.com/design-pattern/factory-pattern.html
+
+
+
+
+
+
+
