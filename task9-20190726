@@ -1,0 +1,98 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+数组 
+实现一个支持动态扩容的数组 
+实现一个大小固定的有序数组，支持动态增删改操作 
+实现两个有序数组合并为一个有序数组
+LeetCode对应编号：15，41,169 - done
+
+链表 
+实现单链表、循环链表、双向链表，支持增删操作
+实现单链表反转 
+链表中环的检测
+删除链表倒数第 n 个结点
+实现两个有序的链表合并为一个有序链表
+实现求链表的中间结点
+LeetCode对应编号：206，141，21，19，876
+
+栈：
+LeetCode对应编号：20,155,232,844,224,682,496
+
+判断一个字符串是否是回文字符串
+通过单链表来存储
+    //1.Constructor
+    //2.CRUD
+    //3.Print
+    //4.Main
+    
+
+######A:
+206单链表反转：
+    public ListNode T206_reverseList(ListNode head) {
+//        if(head == null || head.next == null) return head;
+
+        ListNode prev = null;
+        ListNode cur = head;
+
+        while (cur != null){
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+
+        return prev;
+    }
+
+    /**
+     * 递归版本
+     * @param head
+     * @return
+     */
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode p = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+
+
+######R:
+hadoop 的官方最新稳定版本 Hadoop 2.9.2
+从单节点配置开始，进行讲了集群的搭建，
+用户文档：
+http://hadoop.apache.org/docs/stable/index.html
+
+
+######T:
+服务器上新增加了一个站点，
+写好配置文件后，
+nginx -t 检测配置文件正常，
+nginx -s reload 后发现不生效，
+访问不到新站点，
+直接访问了默认的站点。。
+
+纠结了一段时间，
+直接把nginx stop, 再start,
+然后可以访问新站点了。。
+
+nginx -s reload //可能有连接未完成，导致reload未完成
+stop->start 或者 restart可能导致未完成的连接失败
+
+######S:
+http://hadoop.apache.org/docs/stable/index.html
+最近需要做推荐系统，
+准备看一下hadoop文档，
+英文文档写的确实很详尽，
+只是读英文文档感觉有点慢，
+平时需要多练习。。。
+
+
+
+
+
