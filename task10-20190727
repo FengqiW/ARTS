@@ -1,0 +1,294 @@
+1.每周至少做一个 leetcode 的算法题
+2.阅读并点评至少一篇英文技术文章
+3.学习至少一个技术技巧
+4.分享一篇有观点和思考的技术文章
+
+数组 
+实现一个支持动态扩容的数组 
+实现一个大小固定的有序数组，支持动态增删改操作 
+实现两个有序数组合并为一个有序数组
+
+链表 
+实现单链表、循环链表、双向链表，支持增删操作
+实现单链表反转 -done
+链表中环的检测 -done
+删除链表倒数第 n 个结点 -done
+实现两个有序的链表合并为一个有序链表 - done
+实现求链表的中间结点 - done
+LeetCode对应编号：206-done，141-done，142-done, 19-done，21-done，876-done
+
+栈：
+LeetCode对应编号：20,155,232,844,224,682,496
+
+判断一个字符串是否是回文字符串
+通过单链表来存储
+    //1.Constructor
+    //2.CRUD
+    //3.Print
+    //4.Main
+    
+
+######A:
+876. 链表的中间结点
+ public ListNode T876_middleNode(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (slow.next != null && fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if(fast.next != null) return slow.next;
+        else return slow;
+    }
+
+    //leetcode 官方题解 ,技巧性更好
+    public ListNode T876_middleNode2(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (slow.next != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+21. 合并两个有序链表
+    public ListNode T21_mergeTwoLists(ListNode l1, ListNode l2) {
+
+        ListNode dummy = new ListNode(0);
+        // 开始循环合并
+        ListNode pivot = dummy;
+        while (l1 != null && l2 != null){
+            if(l1.val <= l2.val){
+                pivot.next = l1;
+                l1 = l1.next;
+            }else {
+                pivot.next = l2;
+                l2 = l2.next;
+            }
+
+            pivot = pivot.next;
+        }
+
+        if(l1 != null){
+            pivot.next = l1;
+        }else{
+            pivot.next = l2;
+        }
+
+
+        return dummy.next;
+    }
+
+    public ListNode T21_mergeTwoLists2(ListNode l1, ListNode l2) {
+//        ListNode newList = null;
+//        ListNode head = null;
+//
+////        if(newList == null){
+////            newList = new ListNode(0);
+////            head = newList;
+////        }
+//
+//        while (l1 != null && l2 != null){
+//
+//            ListNode tmp = new ListNode(0);
+//            if(l1.val <= l2.val){
+//                tmp.val = l1.val;
+//                l1 = l1.next;
+//            }else {
+//                tmp.val = l2.val;
+//                l2 = l2.next;
+//            }
+//
+//            newList = tmp;
+//            newList = newList.next;
+//        }
+//
+//        while (l1 != null){
+//            ListNode tmp = new ListNode(l1.val);
+//            l1 = l1.next;
+//            newList.next = tmp;
+//            newList = newList.next;
+//        }
+//
+//        while (l2 != null){
+//            ListNode tmp = new ListNode(l2.val);
+//            l2 = l2.next;
+//            newList.next = tmp;
+//            newList = newList.next;
+//        }
+
+        if( l1 == null ) return l2;
+        if(l2 == null) return l1;
+
+        ListNode head;
+        ListNode p = l1;
+        ListNode q = l2;
+
+        // 以下8行的作用只是把head保存下来
+            if(p.val <= q.val){
+                head = p;
+                p = p.next;
+            }else {
+                head = q;
+                q = q.next;
+            }
+
+            ListNode soldier = head;
+
+            // 开始循环合并
+        while (p != null && q != null){
+           if(p.val <= q.val){
+               soldier.next = p;
+               p = p.next;
+           }else {
+               soldier.next = q;
+               q = q.next;
+           }
+
+           soldier = soldier.next;
+        }
+
+        if(p != null){
+            soldier.next = p;
+        }else{
+            soldier.next = q;
+        }
+
+
+        return head;
+    }
+
+public boolean T141_hasCycle(ListNode head) {
+        Set<ListNode> set = new HashSet();
+        while (head != null){
+            if(set.contains(head)){
+                return true;
+            }else{
+                set.add(head);
+            }
+            head = head.next;
+        }
+
+        return false;
+    }
+
+    public boolean T141_hasCycle2(ListNode head) {
+        if(head == null || head.next == null)return  false;
+
+        ListNode low = head, fast = head.next;
+        while (low != fast){ //这里误写成了 low  != head ,还调试了好几次
+            if(fast == null || fast.next == null) return false;
+
+            low = low.next;
+            fast = fast.next.next;
+        }
+
+        return true;
+    }
+
+
+    public ListNode T142_detectCycle(ListNode head) {
+        ListNode circleNode = CircleNode(head);
+        if(circleNode != null){
+            int i = 0;
+            while (head != circleNode){
+                head = head.next;
+                ++i;
+            }
+//            System.out.println("tail connects to node index " + i);
+            return  head;
+        }else{
+//            System.out.println("no cycle");
+            return null;
+        }
+    }
+
+    private ListNode CircleNode(ListNode head){
+       //这种方法不太合适，重复的不一定是第一个重复元素
+        //原来这里有个 Floyd 算法，我没了解而已。。
+
+//        if(head == null || head.next == null)return  null;
+//
+//        ListNode low = head, fast = head.next;
+//        while (low != fast){ //这里误写成了 low  != head ,还调试了好几次
+//            if(fast == null || fast.next == null) return null;
+//
+//            low = low.next;
+//            fast = fast.next.next;
+//        }
+
+//        ListNode ptr1 = head;
+//        ListNode ptr2 = intersect;
+//        while (ptr1 != ptr2) {
+//            ptr1 = ptr1.next;
+//            ptr2 = ptr2.next;
+//        }
+
+//        return ptr1;
+
+
+
+        Set<ListNode> set = new HashSet();
+        while (head != null){
+            if(set.contains(head)){
+                return head;
+            }else{
+                set.add(head);
+            }
+            head = head.next;
+        }
+
+        return null;
+    }
+
+T19删除链表的倒数第N个节点
+
+    public ListNode T19_removeNthFromEnd(ListNode head, int n) {
+        //1. 如果链表中有记录链表大小，可以计算出要删除的节点正数排序
+        //2. 反转链表，删除第N个元素，再反转一次
+        //3. 两次遍历法， 一次遍历法（关键是找到思路）
+        //我来实现一下 一次遍历法, 边界条件怎么控制, 还是没有成功
+
+        //设置一个dummy节点的技巧
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode first = dummy, second = dummy;
+        while (n>0){
+            first = first.next;
+            --n;
+        }
+        while (first.next != null){
+            first = first.next;
+            second = second.next;
+        }
+
+        //我更容易理解这种思路
+//        if(second.next == head) //删除头节点的情况
+//            head = head.next;
+//        second.next = second.next.next;
+//        return head;
+
+
+        second.next = second.next.next;
+        return dummy.next;
+    }
+
+######R:
+
+
+######T:
+链表操作中有些小技巧，
+如查找链表的倒数第N个节点中设置一个占位的节点，
+这样处理边界的时候，
+就简化很多，
+代码看起来也更顺畅，
+每个节点的操作也更具有了一致性统一性。。
+
+这些小技巧还是十分有用，
+需要多看多积累。。
+
+######S:
+刷题目应该像打游戏一样，
+困了，累了，
+刷力扣！（leetcode)
